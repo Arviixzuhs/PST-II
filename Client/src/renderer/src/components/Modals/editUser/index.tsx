@@ -20,37 +20,33 @@ export const EditUserProfileModal = () => {
   const users = useSelector((state: any) => state.users.data)
   const currentUserIdEdit = useSelector((state: any) => state.users.currentUserIdEdit)
   const currentUserEdit = users.find((item: { id: any }) => item.id == currentUserIdEdit)
-  const [data, setData] = React.useState({
-    ...currentUserIdEdit,
-    age: parseInt(currentUserIdEdit.age),
-  })
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
+  const [data, setData] = React.useState({})
 
   React.useEffect(() => {
-    if (currentUserIdEdit !== -1) {
-      onOpen()
-    }
+    if (currentUserIdEdit !== -1) onOpen()
   }, [currentUserIdEdit])
 
   const handleChange = (e: any) => {
+    let name = e.target.name
+    let value = e.target.value
+    let intValues = ['age']
+
     setData({
       ...data,
-      [e.target.name]: e.target.value,
+      [name]: intValues.includes(name) ? parseInt(value) : value,
     })
   }
 
-  const handleResetCurrentIdEdit = () => {
-    dispatch(setCurrentEditUserId(-1))
-  }
+  const handleResetCurrentIdEdit = () => dispatch(setCurrentEditUserId(-1))
 
   const handleAddNewUser = async () => {
     try {
-      dispatch(editUser({ data: data, id: currentUserEdit?.id }))
-      const response = await reqEditPatient({
-        data: { ...data, age: parseInt(data.age) },
+      dispatch(editUser({ data, id: currentUserEdit?.id }))
+      await reqEditPatient({
+        data,
         id: currentUserEdit?.id,
       })
-      console.log(response.data)
       toast.success('Paciente editado correctamente')
       handleResetCurrentIdEdit()
       onClose()
@@ -78,8 +74,9 @@ export const EditUserProfileModal = () => {
                   name={input.name}
                   type={input.type}
                   label={input.label}
-                  defaultValue={currentUserEdit && currentUserEdit[input.name]}
+                  required={true}
                   onChange={(e) => handleChange(e)}
+                  defaultValue={currentUserEdit && currentUserEdit[input.name]}
                 />
               ))}
             </div>
