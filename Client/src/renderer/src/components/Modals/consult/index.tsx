@@ -66,6 +66,7 @@ export const CreateConsultModal = () => {
             </div>
             <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
               <DatePicker
+                label='Fecha de la consulta'
                 onChange={(e) => {
                   const consultDate = new Date(`${e.year}-${e.month}-${e.day}`)
                   setData({
