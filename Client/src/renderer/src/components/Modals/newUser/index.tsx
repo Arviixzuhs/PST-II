@@ -1,15 +1,17 @@
 import React from 'react'
 import toast from 'react-hot-toast'
-import { inputs } from '../Inputs'
 import { addUser } from '../../../features/usersSlice'
 import { PlusIcon } from '../../TableUser/PlusIcon'
 import { useDispatch } from 'react-redux'
 import { reqAddPatient } from '@renderer/api/Requests'
+import { inputs, selectInputs } from '../Inputs'
 import {
   Modal,
   Input,
   Button,
+  Select,
   ModalBody,
+  SelectItem,
   ModalFooter,
   ModalHeader,
   ModalContent,
@@ -18,9 +20,8 @@ import {
 
 export const CreateNewUserModal = () => {
   const dispatch = useDispatch()
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
-
   const [data, setData] = React.useState<any>({})
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
 
   const handleChange = (e: any) => {
     setData({
@@ -58,6 +59,23 @@ export const CreateNewUserModal = () => {
                   label={input.label}
                   onChange={(e) => handleChange(e)}
                 />
+              ))}
+            </div>
+            <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
+              {selectInputs.map((item, index) => (
+                <Select
+                  key={index}
+                  name={item.name}
+                  label='Estado del pasiente'
+                  className='max-w-x'
+                  onChange={(e) => handleChange(e)}
+                >
+                  {item.options.map((state) => (
+                    <SelectItem key={state.value} value={state.value}>
+                      {state.label}
+                    </SelectItem>
+                  ))}
+                </Select>
               ))}
             </div>
           </ModalBody>

@@ -35,27 +35,8 @@ const selectInputs = [
   {
     name: 'status',
     options: [
-      { label: 'Active', value: 'active' },
-      { label: 'Paused', value: 'paused' },
-      { label: 'Vacation', value: 'vacation' },
-    ],
-  },
-  {
-    name: 'role',
-    options: [
-      { label: 'CEO', value: 'CEO' },
-      { label: 'Mod', value: 'Mod' },
-      { label: 'Admin', value: 'Admin' },
-      { label: 'Helper', value: 'Helper' },
-    ],
-  },
-  {
-    name: 'team',
-    options: [
-      { label: 'Bots', value: 'Bots' },
-      { label: 'UX/UI', value: 'UX/UI' },
-      { label: 'Data bases', value: 'Data bases' },
-      { label: 'Development', value: 'Development' },
+      { label: 'Vivo', value: 'ALIVE' },
+      { label: 'Muerto', value: 'DEAD' },
     ],
   },
 ]

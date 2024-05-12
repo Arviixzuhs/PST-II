@@ -2,7 +2,9 @@ import {
   Input,
   Modal,
   Button,
+  Select,
   ModalBody,
+  SelectItem,
   ModalFooter,
   ModalHeader,
   ModalContent,
@@ -10,7 +12,7 @@ import {
 } from '@nextui-org/react'
 import toast from 'react-hot-toast'
 import React from 'react'
-import { inputs } from '../Inputs'
+import { inputs, selectInputs } from '../Inputs'
 import { reqEditPatient } from '@renderer/api/Requests'
 import { useDispatch, useSelector } from 'react-redux'
 import { editUser, setCurrentEditUserId } from '../../../features/usersSlice'
@@ -78,6 +80,24 @@ export const EditUserProfileModal = () => {
                   onChange={(e) => handleChange(e)}
                   defaultValue={currentUserEdit && currentUserEdit[input.name]}
                 />
+              ))}
+            </div>
+            <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
+              {selectInputs.map((item, index) => (
+                <Select
+                  key={index}
+                  name={item.name}
+                  label='Estado del pasiente'
+                  className='max-w-x'
+                  onChange={(e) => handleChange(e)}
+                  defaultSelectedKeys={[currentUserEdit && currentUserEdit[item.name]]}
+                >
+                  {item.options.map((state) => (
+                    <SelectItem key={state.value} value={state.value}>
+                      {state.label}
+                    </SelectItem>
+                  ))}
+                </Select>
               ))}
             </div>
           </ModalBody>
