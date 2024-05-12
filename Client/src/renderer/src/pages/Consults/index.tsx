@@ -29,9 +29,9 @@ export const Consults = () => {
   const filteredData = consult.data.filter((consult: any) => {
     const parsedConsultDate = newParseDate({ date: consult.date })
     return (
-      parsedConsultDate.day === currentData.day &&
-      parsedConsultDate.month === currentData.month &&
-      parsedConsultDate.year === currentData.year
+      parsedConsultDate.day === currentData?.day &&
+      parsedConsultDate.month === currentData?.month &&
+      parsedConsultDate.year === currentData?.year
     )
   })
 
@@ -65,7 +65,6 @@ export const Consults = () => {
   const RenderCell = (item: any, columnKey: any) => {
     const cellValue = item[columnKey]
 
-    console.log(item)
     switch (columnKey) {
       case 'date':
         const parsedDate = newParseDate({ date: cellValue })

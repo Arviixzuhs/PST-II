@@ -5,7 +5,7 @@ export const manageConsultsSlice = createSlice({
   initialState: {
     data: <any[]>[],
     currentConsultId: -1,
-    currentConsultDate: {},
+    currentConsultDate: null,
   },
   reducers: {
     setConsults: (state, action) => {
