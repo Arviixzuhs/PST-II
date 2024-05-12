@@ -10,9 +10,19 @@ const columns = [
 ]
 
 const statusOptions = [
-  { name: 'Active', uid: 'active' },
-  { name: 'Paused', uid: 'paused' },
-  { name: 'Vacation', uid: 'vacation' },
+  { name: 'Vivo', uid: 'vivo' },
+  { name: 'Muerto', uid: 'muerto' },
 ]
 
-export { columns, statusOptions }
+const InitialVisibleColumns = [
+  'CI',
+  'age',
+  'role',
+  'name',
+  'email',
+  'status',
+  'actions',
+  'lastName',
+]
+
+export { columns, statusOptions, InitialVisibleColumns }
