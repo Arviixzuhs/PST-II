@@ -33,7 +33,6 @@ export const manageUsersSlice = createSlice({
     },
     setCurrentEditUserId: (state, action) => {
       state.currentUserIdEdit = action.payload
-      console.log(action.payload)
     }
   }
 })
