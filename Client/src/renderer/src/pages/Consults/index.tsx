@@ -109,12 +109,12 @@ export const Consults = () => {
   }
 
   return (
-    <div style={{ display: 'flex', gap: '15px' }}>
+    <div className='flex gap-4'>
       <div>
         <MedicalConsultationCalendar />
       </div>
-      <div style={{ width: '100%', display: 'flex', gap: '15px', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', gap: '10px' }}>
+      <div className='w-full flex gap-4 flex-col'>
+        <div className='flex gap-3'>
           <Input isClearable className='w-full sm:max-w-[44%]' placeholder='Buscar por nombre...' />
           <CreateConsultModal />
         </div>
