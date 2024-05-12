@@ -14,16 +14,13 @@ export const NavbarUserOptions = () => {
 
   if (token) {
     return (
-      <Dropdown placement='bottom-end'>
+      <Dropdown>
         <DropdownTrigger>
           <Avatar
             isBordered
             as='button'
-            className='transition-transform'
-            color='secondary'
-            name='Jason Hughes'
+            color='primary'
             size='sm'
-            src='https://i.pravatar.cc/150?u=a042581f4e29026704d'
           />
         </DropdownTrigger>
         <DropdownMenu aria-label='Profile Actions' variant='flat'>
@@ -39,7 +36,7 @@ export const NavbarUserOptions = () => {
     )
   } else {
     return (
-      <Avatar as='button' size='sm' color='secondary' className='transition-transform' isBordered />
+      <Avatar as='button' size='sm' color='primary' className='transition-transform' isBordered />
     )
   }
 }
