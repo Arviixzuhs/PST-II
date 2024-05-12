@@ -20,7 +20,7 @@
 .mainContainer {
   gap: 4rem;
   display: flex;
-  max-width: 1100px;
+  max-width: 1400px;
   margin-top: 2rem;
   flex-direction: column;
 }
@@ -29,6 +29,11 @@ main {
   padding: 20px;
   width: 100%;
   display: flex;
-  max-width: 1000px;
+  max-width: 1250px;
   flex-direction: column;
+}
+
+.iconSVG {
+  width: 20px;
+  height: 20px;
 }
