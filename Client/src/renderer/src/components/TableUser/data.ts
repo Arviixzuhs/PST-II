@@ -10,8 +10,8 @@ const columns = [
 ]
 
 const statusOptions = [
-  { name: 'Vivo', uid: 'vivo' },
-  { name: 'Muerto', uid: 'muerto' },
+  { name: 'Vivo', uid: 'ALIVE' },
+  { name: 'Muerto', uid: 'DEAD' },
 ]
 
 const InitialVisibleColumns = [
