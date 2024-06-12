@@ -1,10 +1,12 @@
 import Router from './routes'
-import { Toaster } from 'react-hot-toast'
+import { NotificationToast } from './components/Notification'
+import './styles/theme.scss'
+import './styles/webkit.scss'
 
 function App(): JSX.Element {
   return (
     <>
-      <Toaster position='bottom-right' reverseOrder={false} />
+      <NotificationToast />
       <Router />
     </>
   )
