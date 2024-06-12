@@ -1,10 +1,5 @@
 import React from 'react'
-import toast from 'react-hot-toast'
-import { addUser } from '../../../features/usersSlice'
-import { PlusIcon } from '../../TableUser/PlusIcon'
-import { useDispatch } from 'react-redux'
-import { reqAddPatient } from '@renderer/api/Requests'
-import { inputs, selectInputs } from '../Inputs'
+import { PlusIcon } from '@renderer/components/Icons/PlusIcon'
 import {
   Modal,
   Input,
@@ -18,8 +13,7 @@ import {
   useDisclosure,
 } from '@nextui-org/react'
 
-export const CreateNewUserModal = () => {
-  const dispatch = useDispatch()
+export const CreateNewUserModal = ({ modal }) => {
   const [data, setData] = React.useState<any>({})
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
 
@@ -30,28 +24,24 @@ export const CreateNewUserModal = () => {
     })
   }
 
-  const handleAddNewUser = async () => {
-    try {
-      const response = await reqAddPatient({ ...data, age: parseInt(data.age) })
-      dispatch(addUser(response.data))
-      onClose()
-      toast.success('Paciente guardado correctamente')
-    } catch (error: any) {
-      toast.error(error.response.data.message)
-    }
+  const handleAddNewUser = () => {
+    modal.action(data)
+    onClose()
   }
 
   return (
     <div className='flex flex-col gap-2'>
       <Button onPress={onOpen} color='primary' endContent={<PlusIcon />}>
-        Agregar paciente
+        {modal.buttonTitle}
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior={'inside'} backdrop='blur'>
         <ModalContent>
-          <ModalHeader className='flex flex-col gap-1'>Agrega a un nuevo paciente</ModalHeader>
+          <ModalHeader className='flex flex-col gap-1'>
+            <h3 className='default-text-color'>{modal.title}</h3>
+          </ModalHeader>
           <ModalBody>
             <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
-              {inputs.map((input, index) => (
+              {modal?.inputs?.map((input, index) => (
                 <Input
                   key={index}
                   name={input.name}
@@ -62,16 +52,20 @@ export const CreateNewUserModal = () => {
               ))}
             </div>
             <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
-              {selectInputs.map((item, index) => (
+              {modal?.selectInputs?.map((item, index) => (
                 <Select
                   key={index}
                   name={item.name}
-                  label='Estado del pasiente'
-                  className='max-w-x'
+                  label={item.label}
+                  className='max-w-x default-text-color'
                   onChange={(e) => handleChange(e)}
                 >
                   {item.options.map((state) => (
-                    <SelectItem key={state.value} value={state.value}>
+                    <SelectItem
+                      key={state.value}
+                      value={state.value}
+                      className='default-text-color'
+                    >
                       {state.label}
                     </SelectItem>
                   ))}

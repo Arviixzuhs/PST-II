@@ -10,20 +10,17 @@ import {
   ModalContent,
   useDisclosure,
 } from '@nextui-org/react'
-import toast from 'react-hot-toast'
 import React from 'react'
-import { inputs, selectInputs } from '../Inputs'
-import { reqEditPatient } from '@renderer/api/Requests'
+import { setCurrentEditUserId } from '../../../features/usersSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { editUser, setCurrentEditUserId } from '../../../features/usersSlice'
 
-export const EditUserProfileModal = () => {
+export const EditUserProfileModal = ({ modal }) => {
   const dispatch = useDispatch()
+  const [data, setData] = React.useState({})
   const users = useSelector((state: any) => state.users.data)
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
   const currentUserIdEdit = useSelector((state: any) => state.users.currentUserIdEdit)
   const currentUserEdit = users.find((item: { id: any }) => item.id == currentUserIdEdit)
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
-  const [data, setData] = React.useState({})
 
   React.useEffect(() => {
     if (currentUserIdEdit !== -1) onOpen()
@@ -43,34 +40,27 @@ export const EditUserProfileModal = () => {
   const handleResetCurrentIdEdit = () => dispatch(setCurrentEditUserId(-1))
 
   const handleAddNewUser = async () => {
-    try {
-      dispatch(editUser({ data, id: currentUserEdit?.id }))
-      await reqEditPatient({
-        data,
-        id: currentUserEdit?.id,
-      })
-      toast.success('Paciente editado correctamente')
-      handleResetCurrentIdEdit()
-      onClose()
-    } catch (error) {
-      console.log(error)
-    }
+    modal.action(data, currentUserEdit)
+    handleResetCurrentIdEdit()
+    onClose()
   }
 
   return (
     <div className='flex flex-col gap-2'>
       <Modal
         isOpen={isOpen}
+        onClose={handleResetCurrentIdEdit}
+        backdrop='blur'
         onOpenChange={onOpenChange}
         scrollBehavior={'inside'}
-        backdrop='blur'
-        onClose={handleResetCurrentIdEdit}
       >
         <ModalContent>
-          <ModalHeader className='flex flex-col gap-1'>Editar paciente</ModalHeader>
+          <ModalHeader className='flex flex-col gap-1'>
+            <h3 className='default-text-color'>{modal.title}</h3>
+          </ModalHeader>
           <ModalBody>
             <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
-              {inputs.map((input, index) => (
+              {modal.inputs.map((input, index) => (
                 <Input
                   key={index}
                   name={input.name}
@@ -83,17 +73,21 @@ export const EditUserProfileModal = () => {
               ))}
             </div>
             <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
-              {selectInputs.map((item, index) => (
+              {modal.selectInputs.map((item, index) => (
                 <Select
                   key={index}
                   name={item.name}
-                  label='Estado del pasiente'
-                  className='max-w-x'
+                  label={item.label}
                   onChange={(e) => handleChange(e)}
+                  className='max-w-x default-text-color'
                   defaultSelectedKeys={[currentUserEdit && currentUserEdit[item.name]]}
                 >
                   {item.options.map((state) => (
-                    <SelectItem key={state.value} value={state.value}>
+                    <SelectItem
+                      key={state.value}
+                      value={state.value}
+                      className='default-text-color'
+                    >
                       {state.label}
                     </SelectItem>
                   ))}
