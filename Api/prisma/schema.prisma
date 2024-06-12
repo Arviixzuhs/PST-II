@@ -67,7 +67,7 @@ model ClinicalStaff {
   lastName     String    @default("") @db.VarChar(30)
   CI           String    @unique
   placaCarro   String    @default("") @db.VarChar(30)
-  numeroHijos  Int       @default(0)
+  numeroHijos  String    @default("0")
   area         String    @default("") @db.VarChar(30)
   gender       Gender    @default(MALE)
   createdAt    DateTime? @default(now())
@@ -79,5 +79,6 @@ model ClinicalStaff {
   phone        String    @default("") @db.VarChar(30)
   email        String    @default("") @db.VarChar(30)
   address      String    @default("") @db.VarChar(30)
+  avatar       String    @default("") @db.VarChar(200)
   Consult      Consult[]
 }
