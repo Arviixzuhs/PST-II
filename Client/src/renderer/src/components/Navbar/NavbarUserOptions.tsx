@@ -16,19 +16,19 @@ export const NavbarUserOptions = () => {
     return (
       <Dropdown>
         <DropdownTrigger>
-          <Avatar
-            isBordered
-            as='button'
-            color='primary'
-            size='sm'
-          />
+          <Avatar isBordered as='button' color='primary' size='sm' />
         </DropdownTrigger>
         <DropdownMenu aria-label='Profile Actions' variant='flat'>
-          <DropdownItem key='profile' className='h-14 gap-2'>
+          <DropdownItem key='profile' className='h-14 gap-2 default-text-color'>
             <p className='font-semibold'>Registrado como</p>
             <p className='font-semibold'>{user?.email}</p>
           </DropdownItem>
-          <DropdownItem key='logout' color='danger' onClick={() => logOut()}>
+          <DropdownItem
+            key='logout'
+            className='text-danger'
+            color='danger'
+            onClick={() => logOut()}
+          >
             Cerrar sesión
           </DropdownItem>
         </DropdownMenu>
