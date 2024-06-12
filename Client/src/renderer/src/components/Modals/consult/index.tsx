@@ -1,6 +1,6 @@
 import React from 'react'
 import toast from 'react-hot-toast'
-import { PlusIcon } from '../../TableUser/PlusIcon'
+import { PlusIcon } from '@renderer/components/Icons/PlusIcon'
 import { useDispatch } from 'react-redux'
 import {
   Modal,
@@ -51,7 +51,9 @@ export const CreateConsultModal = () => {
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior={'inside'} backdrop='blur'>
         <ModalContent>
-          <ModalHeader className='flex flex-col gap-1'>Crea una nueva consulta</ModalHeader>
+          <ModalHeader className='flex flex-col gap-1'>
+            <h3 className=' default-text-color'>Crea una nueva consulta</h3>
+          </ModalHeader>
           <ModalBody>
             <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
               {inputs.map((input, index) => (

@@ -11,29 +11,60 @@
 
 @import 'tailwindcss/utilities';
 
+body {
+  background-color: var(--bgColor);
+  height: 100vh;
+}
+
 .mainContent {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--bgColor);
 }
 
 .mainContainer {
   gap: 4rem;
   display: flex;
-  max-width: 1400px;
-  margin-top: 2rem;
+  max-width: 1450px;
+  margin-top: 10px;
   flex-direction: column;
+  background-color: var(--bgColor);
 }
 
 main {
-  padding: 20px;
   width: 100%;
+
+  padding: 20px;
   display: flex;
-  max-width: 1250px;
+  max-width: 1450px;
   flex-direction: column;
 }
 
 .iconSVG {
   width: 20px;
   height: 20px;
+}
+
+.changeThemeIcon {
+  cursor: pointer;
+  svg {
+    color: #71717a;
+    font-size: 20px;
+  }
+}
+
+.default-text-color {
+  color: var(--text);
+}
+
+.max-w-table {
+  max-width: 100%;
+}
+
+.dropdownCheckboxIcon {
+  svg {
+    color: var(--text);
+    font-size: 20px;
+  }
 }

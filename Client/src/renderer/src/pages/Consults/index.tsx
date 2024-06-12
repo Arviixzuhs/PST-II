@@ -79,7 +79,7 @@ export const Consults = () => {
 
       case 'reason':
         return item.reason ? (
-          <Tooltip content={item.reason}>
+          <Tooltip className='default-text-color' content={item.reason}>
             <div>
               <BiCommentCheck color='#12a17e' className='iconSVG' />
             </div>
@@ -125,7 +125,11 @@ export const Consults = () => {
           <TableBody items={filteredData}>
             {(item: any) => (
               <TableRow key={item.data}>
-                {(columnKey) => <TableCell>{RenderCell(item, columnKey)}</TableCell>}
+                {(columnKey) => (
+                  <TableCell className='default-text-color'>
+                    {RenderCell(item, columnKey)}
+                  </TableCell>
+                )}
               </TableRow>
             )}
           </TableBody>

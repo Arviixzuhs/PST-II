@@ -76,7 +76,9 @@ export const EditConsultModal = () => {
         onClose={handleResetCurrentConsultId}
       >
         <ModalContent>
-          <ModalHeader className='flex flex-col gap-1'>Editar Consulta</ModalHeader>
+          <ModalHeader className='flex flex-col gap-1'>
+            <h3 className=' default-text-color'>Editar Consulta</h3>
+          </ModalHeader>
           <ModalBody>
             <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
               {inputs.map((input, index) => (
