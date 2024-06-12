@@ -12,22 +12,22 @@ export class ClinicalStaffController {
   }
 
   @Get('/get/:id')
-  getUserById(@Param('id') id: string) {
+  getById(@Param('id') id: string) {
     return this.clinicalStaffService.getClinicalStaffById(Number(id))
   }
 
   @Get('/get-all')
-  getAllConsults() {
+  getAll() {
     return this.clinicalStaffService.getAllClinicalStaff()
   }
 
   @Delete('/delete/:id')
-  deleteConsult(@Param('id') id: string) {
+  delete(@Param('id') id: string) {
     return this.clinicalStaffService.deleteClinicalStaff(Number(id))
   }
 
   @Put('/update/:id')
-  updateConsult(@Param('id', ParseIntPipe) id: number, @Body() data: ClinicalStaff) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() data: ClinicalStaff) {
     return this.clinicalStaffService.updateClinicalStaff(id, data)
   }
 }
