@@ -12,7 +12,7 @@ export class MyMiddleware implements NestMiddleware {
 
       jwt.verify(token, process.env.SECRET_KEY, (error, user) => {
         if (error) {
-          return res.status(401).json({ message: 'Token is not valid' })
+          return res.status(401).json({ message: 'Token is not valid', code: 1 })
         }
         next()
       })
