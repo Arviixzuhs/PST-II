@@ -18,4 +18,13 @@ export const reqDeleteConsult = async (id: any) => api.delete('/consult/delete/'
 export const reqUpdateConsult = async ({ data, id }: { data: any; id: any }) =>
   api.put('/consult/update/' + id, data)
 export const reqGetAllConsults = async () => api.get('/consult/get-all')
-export const reqGetConsult = async (id) => api.get('/consult/get/' + id)
+export const reqGetConsult = async (id: any) => api.get('/consult/get/' + id)
+
+/* Rutas para manejar al personal medico */
+export const reqAddStaff = (data: any) => api.post('/clinical-staff/create', data)
+export const reqEditStaff = ({ data, id }: { data: any; id: any }) =>
+  api.put('/clinical-staff/update/' + id, data)
+export const reqDeleteStaff = (id: any) => api.delete('/clinical-staff/delete/' + id)
+export const reqLoadAllStaff = () => api.get('/clinical-staff/get-all')
+
+export const reqGetHospitalStats = () => api.get('/hospital/get-stats')
