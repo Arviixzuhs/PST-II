@@ -6,15 +6,14 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from '@nextui-org/react'
-import { SearchIcon } from './SearchIcon'
+import { SearchIcon } from '../Icons/SearchIcon'
 import { capitalize } from './utils'
 import { useSelector } from 'react-redux'
-import { ChevronDownIcon } from './ChevronDownIcon'
-import { EditUserProfileModal } from '../Modals/editUser'
-import { columns, statusOptions } from './data'
+import { ChevronDownIcon } from '../Icons/ChevronDownIcon'
 
 export const TopContent = ({
   setPage,
+  columnsData,
   filterValue,
   statusFilter,
   visibleColumns,
@@ -22,10 +21,11 @@ export const TopContent = ({
   setFilterValue,
   setStatusFilter,
   setVisibleColumns,
-  managePatientButtonModal,
+  createNewUserModal,
+  editUserProfileModal,
 }) => {
   const users = useSelector((state: any) => state.users.data)
-  const onRowsPerPageChange = (e) => {
+  const onRowsPerPageChange = (e: any) => {
     setRowsPerPage(parseInt(e.target.value))
     setPage(1)
   }
@@ -72,9 +72,9 @@ export const TopContent = ({
                 selectionMode='multiple'
                 onSelectionChange={setStatusFilter}
               >
-                {statusOptions.map((status) => (
-                  <DropdownItem key={status.uid} className='capitalize'>
-                    {capitalize(status.name)}
+                {columnsData.statusOptions.map((status: any) => (
+                  <DropdownItem key={status.uid} className='capitalize dropdownCheckboxIcon'>
+                    <h3 className='default-text-color'>{capitalize(status.name)}</h3>
                   </DropdownItem>
                 ))}
               </DropdownMenu>
@@ -93,14 +93,14 @@ export const TopContent = ({
                 selectionMode='multiple'
                 onSelectionChange={setVisibleColumns}
               >
-                {columns.map((column) => (
-                  <DropdownItem key={column.uid} className='capitalize'>
-                    {capitalize(column.name)}
+                {columnsData.columns.map((column) => (
+                  <DropdownItem key={column.uid} className='capitalize dropdownCheckboxIcon'>
+                    <h3 className='default-text-color'>{capitalize(column.name)}</h3>
                   </DropdownItem>
                 ))}
               </DropdownMenu>
             </Dropdown>
-            {managePatientButtonModal}
+            {createNewUserModal}
           </div>
         </div>
         <div className='flex justify-between items-center'>
@@ -118,7 +118,7 @@ export const TopContent = ({
           </label>
         </div>
       </div>
-      <EditUserProfileModal />
+      {editUserProfileModal}
     </>
   )
 }

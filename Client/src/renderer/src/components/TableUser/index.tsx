@@ -1,9 +1,8 @@
 import React from 'react'
-import { setUsers } from '../../features/usersSlice'
 import { TopContent } from './TopContent'
 import { RenderCell } from './RenderCell'
 import { BottomContent } from './BottomContent'
-import { reqLoadAllPatients } from '@renderer/api/Requests'
+import { setCurrentEditUserId } from '../../features/usersSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   Table,
@@ -15,28 +14,22 @@ import {
   TableColumn,
   SortDescriptor,
 } from '@nextui-org/react'
-import { reqDeletePatient } from '@renderer/api/Requests'
-import { deleteUser, setCurrentEditUserId } from '../../features/usersSlice'
-import { columns, statusOptions, InitialVisibleColumns } from './data'
 
-export const AppTable = ({ managePatientButtonModal }) => {
+export const AppTable = ({
+  columnsData,
+  tableActions,
+  createNewUserModal,
+  editUserProfileModal,
+}) => {
   const dispatch = useDispatch()
   type User = (typeof users)[0]
   const users = useSelector((state: any) => state.users.data)
-
-  React.useEffect(() => {
-    const loadAllPatients = async () => {
-      const response = await reqLoadAllPatients()
-      dispatch(setUsers(response.data))
-    }
-    loadAllPatients()
-  }, [])
 
   const [page, setPage] = React.useState(1)
   const [filterValue, setFilterValue] = React.useState('')
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(new Set([]))
   const [visibleColumns, setVisibleColumns] = React.useState<Selection>(
-    new Set(InitialVisibleColumns),
+    new Set(columnsData.InitialVisibleColumns),
   )
   const [statusFilter, setStatusFilter] = React.useState<Selection>('all')
   const [rowsPerPage, setRowsPerPage] = React.useState(5)
@@ -46,9 +39,11 @@ export const AppTable = ({ managePatientButtonModal }) => {
   })
 
   const headerColumns = React.useMemo(() => {
-    if (visibleColumns === 'all') return columns
+    if (visibleColumns === 'all') return columnsData.columns
 
-    return columns.filter((column) => Array.from(visibleColumns).includes(column.uid))
+    return columnsData.columns.filter((column: any) =>
+      Array.from(visibleColumns).includes(column.uid),
+    )
   }, [visibleColumns])
 
   const hasSearchFilter = Boolean(filterValue)
@@ -60,7 +55,11 @@ export const AppTable = ({ managePatientButtonModal }) => {
         user.name.toLowerCase().includes(filterValue.toLowerCase()),
       )
     }
-    if (statusFilter !== 'all' && Array.from(statusFilter).length !== statusOptions.length) {
+
+    if (
+      statusFilter !== 'all' &&
+      Array.from(statusFilter).length !== columnsData.statusOptions.length
+    ) {
       filteredUsers = filteredUsers.filter((user) => Array.from(statusFilter).includes(user.status))
     }
 
@@ -86,21 +85,11 @@ export const AppTable = ({ managePatientButtonModal }) => {
     })
   }, [sortDescriptor, items])
 
-  const handleDeleteUser = async (id: any) => {
-    try {
-      dispatch(deleteUser(id))
-      await reqDeletePatient(id)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const handleSetCurrentIdEdit = (id: any) => {
-    dispatch(setCurrentEditUserId(id))
-  }
+  const handleDeleteUser = async (id: any) => tableActions.delete(id)
+  const handleSetCurrentIdEdit = (id: any) => dispatch(setCurrentEditUserId(id))
 
   return (
-    <>
+    <div className='max-w-table'>
       <Table
         aria-label='Example table with custom cells, pagination and sorting'
         isHeaderSticky
@@ -120,6 +109,7 @@ export const AppTable = ({ managePatientButtonModal }) => {
         topContent={
           <TopContent
             setPage={setPage}
+            columnsData={columnsData}
             filterValue={filterValue}
             statusFilter={statusFilter}
             visibleColumns={visibleColumns}
@@ -127,7 +117,8 @@ export const AppTable = ({ managePatientButtonModal }) => {
             setFilterValue={setFilterValue}
             setStatusFilter={setStatusFilter}
             setVisibleColumns={setVisibleColumns}
-            managePatientButtonModal={managePatientButtonModal}
+            createNewUserModal={createNewUserModal}
+            editUserProfileModal={editUserProfileModal}
           />
         }
         topContentPlacement='outside'
@@ -135,7 +126,7 @@ export const AppTable = ({ managePatientButtonModal }) => {
         onSortChange={setSortDescriptor}
       >
         <TableHeader columns={headerColumns}>
-          {(column) => (
+          {(column: any) => (
             <TableColumn
               key={column.uid}
               align={column.uid === 'actions' ? 'center' : 'start'}
@@ -149,7 +140,7 @@ export const AppTable = ({ managePatientButtonModal }) => {
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
-                <TableCell>
+                <TableCell className='default-text-color'>
                   {RenderCell(item, columnKey, handleDeleteUser, handleSetCurrentIdEdit)}
                 </TableCell>
               )}
@@ -157,6 +148,6 @@ export const AppTable = ({ managePatientButtonModal }) => {
           )}
         </TableBody>
       </Table>
-    </>
+    </div>
   )
 }

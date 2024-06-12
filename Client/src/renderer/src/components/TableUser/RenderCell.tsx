@@ -1,4 +1,5 @@
 import { ActionDropdown } from '../Dropdown'
+import { ShortCellValue } from './ShortCellValue'
 import { Chip, ChipProps, User } from '@nextui-org/react'
 
 export const RenderCell = (
@@ -17,9 +18,11 @@ export const RenderCell = (
   switch (columnKey) {
     case 'name':
       return (
-        <User avatarProps={{ src: user.avatar }} description={user.email} name={cellValue}>
-          {user.email}
-        </User>
+        <User
+          avatarProps={{ src: user.avatar }}
+          description={<ShortCellValue cellValue={user.email} />}
+          name={<ShortCellValue cellValue={cellValue} />}
+        />
       )
     case 'status':
       return (
@@ -37,6 +40,6 @@ export const RenderCell = (
         </div>
       )
     default:
-      return cellValue
+      return <ShortCellValue cellValue={cellValue} />
   }
 }
