@@ -1,16 +1,10 @@
+import { logOut } from '@renderer/utils/logOut'
 import { useSelector } from 'react-redux'
 import { Avatar, Dropdown, DropdownMenu, DropdownItem, DropdownTrigger } from '@nextui-org/react'
 
 export const NavbarUserOptions = () => {
   const user = useSelector((state: any) => state.user)
   const token = localStorage.getItem('token')
-
-  const logOut = () => {
-    if (token) {
-      localStorage.removeItem('token')
-      window.location.reload()
-    }
-  }
 
   if (token) {
     return (
