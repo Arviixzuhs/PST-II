@@ -1,4 +1,5 @@
 import { Card } from '@nextui-org/react'
+import { logOut } from '@renderer/utils/logOut'
 import { useNavigate } from 'react-router-dom'
 import { Listbox, ListboxItem } from '@nextui-org/react'
 import {
@@ -23,11 +24,9 @@ export const Sidebar = () => {
   const hospitalData = useSelector((state: any) => state.hospital)
   const handleNavigate = (path: string) => navigate(path)
 
-  const IconWrapper = ({ children }) => (
+  const IconWrapper = ({ children, className = '' }) => (
     <div
-      className={
-        'flex items-center rounded-small justify-center bg-primary/10 text-default-400 text-lg'
-      }
+      className={`flex items-center rounded-small justify-center bg-primary/10 text-lg ${className}`}
     >
       {children}
     </div>
@@ -44,7 +43,7 @@ export const Sidebar = () => {
     <Card className='overflow-visible sidebarContainer'>
       <Listbox
         aria-label='User Menu'
-        onAction={(key: any) => handleNavigate(key)}
+        onAction={(key: any) => (key == 'logOut' ? logOut() : handleNavigate(key))}
         className=''
         itemClasses={{
           base: 'px-3 last:rounded-b-medium gap-3 h-12',
@@ -104,7 +103,7 @@ export const Sidebar = () => {
           endContent={<ItemCounter number={hospitalData.consults} />}
           showDivider
           startContent={
-            <IconWrapper>
+            <IconWrapper className='text-default-400'>
               <FaCalendar />
             </IconWrapper>
           }
@@ -115,7 +114,7 @@ export const Sidebar = () => {
           key='contributors'
           endContent={<ItemCounter number={3} />}
           startContent={
-            <IconWrapper>
+            <IconWrapper className='text-default-400'>
               <FaCode />
             </IconWrapper>
           }
@@ -127,7 +126,7 @@ export const Sidebar = () => {
           className='group h-auto py-3'
           showDivider
           startContent={
-            <IconWrapper>
+            <IconWrapper className='text-default-400'>
               <FaLightbulb />
             </IconWrapper>
           }
@@ -146,7 +145,7 @@ export const Sidebar = () => {
         <ListboxItem
           key='watchers'
           startContent={
-            <IconWrapper>
+            <IconWrapper className='text-default-400'>
               <FaCog className='text-lg' />
             </IconWrapper>
           }
@@ -154,12 +153,12 @@ export const Sidebar = () => {
           Configuración
         </ListboxItem>
         <ListboxItem
-          key='license'
+          key='logOut'
           className='text-danger'
           color='danger'
           startContent={
             <IconWrapper>
-              <FaDoorOpen className='text-lg text-danger' />
+              <FaDoorOpen className='text-lg  text-amber-300 ' />
             </IconWrapper>
           }
         >

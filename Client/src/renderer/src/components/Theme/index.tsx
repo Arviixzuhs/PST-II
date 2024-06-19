@@ -7,9 +7,13 @@ export const ChangeTheme = () => {
   React.useEffect(() => {
     const temaGuardado = localStorage.getItem('theme')
     if (temaGuardado) {
+      document.body.classList.remove('light')
       const nuevoTema = temaGuardado === 'light' ? Themes.light : Themes.nigth
       setTheme(nuevoTema)
       document.body.classList.add(nuevoTema.name)
+    } else {
+      setTheme(Themes.light)
+      document.body.classList.add('light')
     }
   }, [])
 
