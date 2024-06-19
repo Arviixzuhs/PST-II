@@ -18,8 +18,12 @@ export const PatientTable = () => {
 
   React.useEffect(() => {
     const handleLoadInfo = async () => {
-      const response = await reqLoadAllPatients()
-      dispatch(setUsers(response.data))
+      try {
+        const response = await reqLoadAllPatients()
+        dispatch(setUsers(response.data))
+      } catch (error) {
+        toast.error('Ocurrió un error al cargar los datos')
+      }
     }
     handleLoadInfo()
   }, [])
@@ -102,8 +106,8 @@ export const PatientTable = () => {
         dispatch(deleteUser(id))
         await reqDeletePatient(id)
         toast.success('Paciente eliminado correctamente')
-      } catch (error) {
-        console.log(error)
+      } catch (error: any) {
+        toast.error(error.response.data.message)
       }
     },
     create: async (data: any) => {

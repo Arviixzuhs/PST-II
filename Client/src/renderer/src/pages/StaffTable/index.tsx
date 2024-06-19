@@ -13,8 +13,12 @@ export const StaffTable = () => {
 
   React.useEffect(() => {
     const handleLoadInfo = async () => {
-      const response = await reqLoadAllStaff()
-      dispatch(setUsers(response.data))
+      try {
+        const response = await reqLoadAllStaff()
+        dispatch(setUsers(response.data))
+      } catch (error) {
+        toast.error('Ocurrió un error al cargar los datos')
+      }
     }
     handleLoadInfo()
   }, [])
