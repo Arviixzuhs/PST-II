@@ -18,8 +18,10 @@ enum Gender {
 }
 
 model Room {
-  id               Int @id @default(autoincrement())
+  id               Int      @id @default(autoincrement())
   piso             Int
+  patient          Patient? @relation(fields: [patientId], references: [id])
+  patientId        Int?
   numeroHabitacion Int
 }
 
@@ -48,6 +50,7 @@ model Patient {
   reasonEntry String    @default("") @db.VarChar(300)
   reasonDeath String    @default("") @db.VarChar(300)
   Consult     Consult[]
+  Room        Room[]
 }
 
 model Consult {
