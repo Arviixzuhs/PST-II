@@ -158,7 +158,7 @@ export const Sidebar = () => {
           color='danger'
           startContent={
             <IconWrapper>
-              <FaDoorOpen className='text-lg  text-amber-300 ' />
+              <FaDoorOpen className='text-lg' />
             </IconWrapper>
           }
         >
